@@ -1,9 +1,15 @@
-var should = require('should');
+var should = require('should'),
+    flashDuel = require('..'),
+    Game = flashDuel.Game;
 
 describe('Game', function() {
 
     describe('1v1', function() {
-        it('should create a new game');
+        it('should create a new game', function(done) {
+            var game = new Game('1v1');
+
+            game.on('init', done);
+        });
         it('should allow one team to win');
     });
 
