@@ -1,0 +1,33 @@
+{
+  "name": "flash-duel",
+  "version": "0.0.1",
+  "description": "Flash Duel board game",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kennethklee/flash-duel.git"
+  },
+  "keywords": [
+    "board",
+    "game",
+    "flash",
+    "duel",
+    "competitive"
+  ],
+  "author": "Kenneth Lee <kennethkl@gmail.com>",
+  "license": "none",
+  "bugs": {
+    "url": "https://github.com/kennethklee/flash-duel/issues"
+  },
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "jshint": "~2.4.4",
+    "should": "~3.2.0-beta1"
+  },
+  "dependencies": {
+    "shuffle": "~0.2.1"
+  }
+}
