@@ -11,9 +11,9 @@ describe('Game', function() {
 
             game.on('init', function(err) {
                 assert.ifError(err);
-                
+
                 game.board.should.not.be.empty;
-                
+
                 done();
             });
         });
@@ -32,14 +32,5 @@ describe('Game', function() {
 
     it('should serialize state');
     it('should deserialize state');
-
-});
-
-describe('Board', function() {
-
-    it('should move a player');
-    it('should fail to move a player outside the board');
-    it('should fail to move a player past the other team');
-    it('should list player positions');
 
 });
