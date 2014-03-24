@@ -1,4 +1,5 @@
-var should = require('should'),
+var assert = require('assert'),
+    should = require('should'),
     flashDuel = require('..'),
     Game = flashDuel.Game;
 
@@ -8,7 +9,13 @@ describe('Game', function() {
         it('should create a new game', function(done) {
             var game = new Game('1v1');
 
-            game.on('init', done);
+            game.on('init', function(err) {
+                assert.ifError(err);
+                
+                game.board.should.not.be.empty;
+                
+                done();
+            });
         });
         it('should allow one team to win');
     });
@@ -34,19 +41,5 @@ describe('Board', function() {
     it('should fail to move a player outside the board');
     it('should fail to move a player past the other team');
     it('should list player positions');
-
-});
-
-describe('Deck', function() {
-
-    it('should create with 25 cards in 1v1 mode');
-    it('should create with 50 cards in 2v2 mode');
-    it('should create empty');
-
-    it('should shuffle');
-    it('should sort');
-
-    it('should draw one card at index');
-    it('should draw x cards from index');
 
 });
