@@ -16,13 +16,13 @@ describe('Board', function() {
     it('should add a player', function(done) {
         var board = new Board(4);
 
-        var peice = board.add(1, Board.UP);
+        var peice = board.add(1, Board.directions.UP);
 
         peice.should.not.be.empty;
         peice.should.be.an.instanceOf(Peice);
         peice.should.have.property('board').and.equal(board);
         peice.should.have.property('position').and.equal(1);
-        peice.should.have.property('direction').and.equal(Board.UP);
+        peice.should.have.property('direction').and.equal(Board.directions.UP);
 
         done();
     });
@@ -30,8 +30,8 @@ describe('Board', function() {
     it('should fail to add players outside the board', function(done) {
         var board = new Board(4);
 
-        var belowPeice = board.add(0, Board.UP),
-            abovePeice = board.add(5, Board.DOWN);
+        var belowPeice = board.add(0, Board.directions.UP),
+            abovePeice = board.add(5, Board.directions.DOWN);
 
         should.not.exist(belowPeice);
         should.not.exist(abovePeice);
@@ -41,11 +41,11 @@ describe('Board', function() {
 
     it('should fail to add opposing players on wrong side', function(done) {
         var board = new Board(4),
-            upPeice = board.add(2, Board.UP),
-            downPeice = board.add(3, Board.DOWN);
+            upPeice = board.add(2, Board.directions.UP),
+            downPeice = board.add(3, Board.directions.DOWN);
 
-        var wrongUpPeice = board.add(3, Board.UP),
-            wrongDownPeice = board.add(1, Board.DOWN);
+        var wrongUpPeice = board.add(3, Board.directions.UP),
+            wrongDownPeice = board.add(1, Board.directions.DOWN);
 
         upPeice.should.not.be.empty;
         downPeice.should.not.be.empty;
@@ -61,11 +61,11 @@ describe('Board', function() {
 
     it('should get the peicing moving a direction', function(done) {
         var board = new Board(4),
-            one = board.add(1, Board.UP),
-            two = board.add(2, Board.UP),
-            three = board.add(4, Board.DOWN);
+            one = board.add(1, Board.directions.UP),
+            two = board.add(2, Board.directions.UP),
+            three = board.add(4, Board.directions.DOWN);
 
-        var peices = board.getPeicesMoving(Board.UP);
+        var peices = board.getPeicesMoving(Board.directions.UP);
 
         peices.should.be.an.instanceOf(Array);
         peices.should.have.property('length').and.equal(2);
@@ -78,11 +78,11 @@ describe('Board', function() {
 
     it('should get furthest position of a direction', function(done) {
         var board = new Board(4),
-            upPeice = board.add(2, Board.UP),
-            downPeice = board.add(3, Board.DOWN);
+            upPeice = board.add(2, Board.directions.UP),
+            downPeice = board.add(3, Board.directions.DOWN);
 
-        var upFurthest = board.getFurthestPosition(Board.UP),
-            downFurthest = board.getFurthestPosition(Board.DOWN);
+        var upFurthest = board.getFurthestPosition(Board.directions.UP),
+            downFurthest = board.getFurthestPosition(Board.directions.DOWN);
 
         upFurthest.should.equal(2);
         downFurthest.should.equal(3);
@@ -92,10 +92,10 @@ describe('Board', function() {
 
     it('should move players forwards and backwards', function(done) {
         var board = new Board(10),
-            upPeice1 = board.add(1, Board.UP),
-            upPeice2 = board.add(3, Board.UP),
-            downPeice1 = board.add(10, Board.DOWN),
-            downPeice2 = board.add(8, Board.DOWN);
+            upPeice1 = board.add(1, Board.directions.UP),
+            upPeice2 = board.add(3, Board.directions.UP),
+            downPeice1 = board.add(10, Board.directions.DOWN),
+            downPeice2 = board.add(8, Board.directions.DOWN);
 
         var upMove1 = upPeice1.moveForward(4),
             upMove2 = upPeice2.moveBackwards(2),
@@ -117,8 +117,8 @@ describe('Board', function() {
 
     it('should fail to move a player outside the board', function(done) {
         var board = new Board(10),
-            upPeice = board.add(1, Board.UP),
-            downPeice = board.add(10, Board.DOWN);
+            upPeice = board.add(1, Board.directions.UP),
+            downPeice = board.add(10, Board.directions.DOWN);
 
         var upMove = upPeice.moveBackwards(4),
             downMove = downPeice.moveBackwards(4);
@@ -135,8 +135,8 @@ describe('Board', function() {
 
     it('should fail to move a player past the other team', function(done) {
         var board = new Board(10),
-            upPeice = board.add(1, Board.UP),
-            downPeice = board.add(10, Board.DOWN);
+            upPeice = board.add(1, Board.directions.UP),
+            downPeice = board.add(10, Board.directions.DOWN);
 
         var upMove = upPeice.moveForward(9),
             downMove = downPeice.moveForward(9);
