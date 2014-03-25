@@ -53,7 +53,7 @@ describe('Game', function() {
 
     describe('Player', function() {
 
-        it('should emit a turn', function(done) {
+        it('should emit a turn when the game starts', function(done) {
             var game = new Game('1v1');
 
             game.on('init', function(err) {
