@@ -163,4 +163,15 @@ describe('Deck', function() {
 
         done();
     });
+
+    it('should count how many cards are the specified number', function(done) {
+        var deck = new Deck([1, 1, 1, 2, 3, 3]);
+
+        deck.countCard(1).should.equal(3);
+        deck.countCard(2).should.equal(1);
+        deck.countCard(3).should.equal(2);
+        deck.countCard(-1).should.equal(0);
+
+        done();
+    });
 });

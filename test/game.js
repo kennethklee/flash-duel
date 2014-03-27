@@ -45,7 +45,7 @@ describe('Game', function() {
             });
         });
 
-        it.skip('should allow one team to win', function(done) {
+        it('should allow one team to win', function(done) {
             var game = new Game('1v1');
 
             game.on('init', function(err) {
@@ -54,18 +54,22 @@ describe('Game', function() {
                     action.moveBackwards(0) || action.move(0);
                 };
 
+                var verify = function() {
+                    done();
+                };
+
                 game.players[0].on('turn', playTurn);
                 game.players[1].on('turn', playTurn);
 
                 // Only one should be triggered
-                game.players[0].on('win', done);
-                game.players[1].on('win', done);
+                game.players[0].on('win', verify);
+                game.players[1].on('win', verify);
 
                 game.start();
             });
         });
 
-        it.skip('should allow one team to lose', function(done) {
+        it('should allow one team to lose', function(done) {
             var game = new Game('1v1');
 
             game.on('init', function(err) {
@@ -74,12 +78,16 @@ describe('Game', function() {
                     action.moveBackwards(0) || action.move(0);
                 };
 
+                var verify = function() {
+                    done();
+                };
+
                 game.players[0].on('turn', playTurn);
                 game.players[1].on('turn', playTurn);
 
                 // Only one should be triggered
-                game.players[0].on('lose', done);
-                game.players[1].on('lose', done);
+                game.players[0].on('lose', verify);
+                game.players[1].on('lose', verify);
 
                 game.start();
             });
