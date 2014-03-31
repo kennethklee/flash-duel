@@ -264,6 +264,7 @@ describe('Game', function() {
 
                     if (~defense) {
                         defend.block(defense);
+                        game.end();
 
                     } else {
                         defend.die();
@@ -279,7 +280,7 @@ describe('Game', function() {
                 game.players[1].on('defend', defendTwo);
 
                 // Only one should be triggered
-                game.players[0].on('win', verify);
+                game.on('end', verify);
 
                 game.start();
             });
@@ -332,6 +333,7 @@ describe('Game', function() {
                 };
 
                 var verify = function(player, game) {
+                    player.state.should.equal(Player.states.RETREATING);
                     game.end(); // Force game end to stop the game
                     done();
                 };
