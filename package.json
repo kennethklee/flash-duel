@@ -1,6 +1,6 @@
 {
   "name": "flash-duel",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Flash Duel board game",
   "main": "index.js",
   "scripts": {
