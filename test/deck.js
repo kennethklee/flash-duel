@@ -140,6 +140,23 @@ describe('Deck', function() {
         done();
     });
 
+    it('should draw many cards from anywhere in deck using array', function(done) {
+        var deck = new Deck([1, 2, 3, 4, 5]);
+
+        var cards = deck.drawAt([0, 4, 2]);
+
+        deck.cards.length.should.equal(2);
+        deck.cards[0].should.equal(2);
+        deck.cards[1].should.equal(4);
+
+        cards.length.should.equal(3);
+        cards.filter(function(card) {
+            return ~[1, 3, 5].indexOf(card);
+        }).length.should.equal(3);
+
+        done();
+    });
+
     it('should "hit" cards on top', function(done) {
         var deck = new Deck([3, 4]);
 

@@ -44,54 +44,6 @@ describe('Game', function() {
                 game.start();
             });
         });
-
-        it('should allow one team to win', function(done) {
-            var game = new Game('1v1');
-
-            game.on('init', function(err) {
-
-                var playTurn = function(action, game) {
-                    action.moveBackwards(0) || action.move(0);
-                };
-
-                var verify = function() {
-                    done();
-                };
-
-                game.players[0].on('turn', playTurn);
-                game.players[1].on('turn', playTurn);
-
-                // Only one should be triggered
-                game.players[0].on('win', verify);
-                game.players[1].on('win', verify);
-
-                game.start();
-            });
-        });
-
-        it('should allow one team to lose', function(done) {
-            var game = new Game('1v1');
-
-            game.on('init', function(err) {
-
-                var playTurn = function(action, game) {
-                    action.moveBackwards(0) || action.move(0);
-                };
-
-                var verify = function() {
-                    done();
-                };
-
-                game.players[0].on('turn', playTurn);
-                game.players[1].on('turn', playTurn);
-
-                // Only one should be triggered
-                game.players[0].on('lose', verify);
-                game.players[1].on('lose', verify);
-
-                game.start();
-            });
-        });
     });
 
     describe('2v2', function() {
@@ -109,7 +61,6 @@ describe('Game', function() {
                 done();
             });
         });
-        it('should allow one team to win');
     });
 
     it('should start a game', function(done) {
@@ -182,6 +133,102 @@ describe('Game', function() {
                     action.player.name.should.equal('two');
                     done();
                 });
+
+                game.start();
+            });
+        });
+
+        it('should win', function(done) {
+            var game = new Game('1v1');
+
+            game.on('init', function(err) {
+
+                var playTurn = function(action, game) {
+                    action.moveBackwards(0) || action.move(0);
+                };
+
+                var verify = function() {
+                    done();
+                };
+
+                game.players[0].on('turn', playTurn);
+                game.players[1].on('turn', playTurn);
+
+                // Only one should be triggered
+                game.players[0].on('win', verify);
+                game.players[1].on('win', verify);
+
+                game.start();
+            });
+        });
+
+        it('should lose', function(done) {
+            var game = new Game('1v1');
+
+            game.on('init', function(err) {
+
+                var playTurn = function(action, game) {
+                    action.moveBackwards(0) || action.move(0);
+                };
+
+                var verify = function() {
+                    done();
+                };
+
+                game.players[0].on('turn', playTurn);
+                game.players[1].on('turn', playTurn);
+
+                // Only one should be triggered
+                game.players[0].on('lose', verify);
+                game.players[1].on('lose', verify);
+
+                game.start();
+            });
+        });
+
+        it('should be able to attack and defend', function(done) {
+            var game = new Game('1v1');
+
+            game.on('init', function(err) {
+
+                var playTurnOne = function(action, game) {
+                    var two = action.getPlayer('two'),
+                        distance = two.peice.position - action.player.peice.position,
+                        attack = action.player.hand.cards.indexOf(distance);
+
+                    if (~attack) {
+                        action.attack([attack], two);    // Attack if possible
+                    } else {
+                        // Forward
+                        action.move(0) || action.moveBackwards(0)
+                        || action.move(1) || action.moveBackwards(1);
+                    }
+                };
+
+                var playTurnTwo = function(action, game) {
+                    // Forward
+                    var result = action.move(0) || action.moveBackwards(0)
+                                || action.move(1) || action.moveBackwards(1);
+
+                    if (!result) {
+                        console.log(action.player.hand);
+                    }
+                };
+
+                var defendTwo = function(defend, game) {
+                    defend.die();
+                };
+
+                var verify = function() {
+                    done();
+                };
+
+                game.players[0].on('turn', playTurnOne);
+                game.players[1].on('turn', playTurnTwo);
+                game.players[1].on('defend', defendTwo);
+
+                // Only one should be triggered
+                game.players[0].on('win', verify);
 
                 game.start();
             });
