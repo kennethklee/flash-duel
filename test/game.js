@@ -186,7 +186,7 @@ describe('Game', function() {
             });
         });
 
-        it('should be able to attack and defend', function(done) {
+        it('should be able to attack and defend or die', function(done) {
             var game = new Game('1v1');
 
             game.on('init', function(err) {
@@ -206,9 +206,12 @@ describe('Game', function() {
                 };
 
                 var playTurnTwo = function(action, game) {
-                    // Forward
+                    // Forward! copy pasta should really use for loop or something
                     var result = action.move(0) || action.moveBackwards(0)
-                                || action.move(1) || action.moveBackwards(1);
+                                || action.move(1) || action.moveBackwards(1)
+                                || action.move(2) || action.moveBackwards(2)
+                                || action.move(3) || action.moveBackwards(3)
+                                || action.move(4) || action.moveBackwards(4);
 
                     if (!result) {
                         console.log(action.player.hand);
@@ -216,7 +219,14 @@ describe('Game', function() {
                 };
 
                 var defendTwo = function(defend, game) {
-                    defend.die();
+                    var defense = defend.player.hand.cards.indexOf(defend.attackCards[0]);
+
+                    if (~defense) {
+                        defend.block(defense);
+
+                    } else {
+                        defend.die();
+                    }
                 };
 
                 var verify = function() {
