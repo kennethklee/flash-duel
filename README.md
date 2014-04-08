@@ -38,7 +38,7 @@ game.on('start', function(err, game) {
 		// Player can defend from an attack
 	});
 
-	game.players[0].on('recover', function(game) {
+	game.players[0].on('recover', function(player, game) {
 		// Player is informed when turn is skipped and is recovering
 	});
 
