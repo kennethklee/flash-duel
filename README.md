@@ -1,6 +1,8 @@
 flash-duel
 ==========
 
+[![Code Climate](https://codeclimate.com/github/kennethklee/flash-duel.png)](https://codeclimate.com/github/kennethklee/flash-duel)
+
 [Flash Duel](http://www.sirlingames.com/collections/flash-duel) board game library with basic game modes.
 
 * 1v1
